@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<launch>
+	<!-- launch wire core -->
+    <arg name="models" default="$(find wire_core)/models/world_object_models.xml" />
+
+    <node pkg="wire_core" type="wire_server" respawn="false" name="wire_server" output="screen" >
+        <rosparam file="$(find wire_core)/parameters/world_model.yaml" command="load" ns=""/>
+        <param name="knowledge_filename" value="$(arg models)"/>   
+    </node>
+    
+	<!-- run generate evidence -->  
+	<node pkg="bep_tpcw" type="generate_evidence_TW" name="generate_evidence_TW" output="screen"/>
+		<param name="Room_int" value="1"/>   
+		<param name="Trajectories_int" value="2"/>   
+  
+    <!-- run rviz   -->
+    <node pkg="rviz" type="rviz" respawn="false" name="rviz_world_model" output="screen" args="-d $(find bep_tpcw)/config/rviz_world_model_kinetic_Room1.rviz" />
+
+    <include file="$(find wire_viz)/launch/start.launch" />  
+
+</launch>

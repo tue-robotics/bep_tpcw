@@ -11,9 +11,11 @@
     
 	<!-- run generate evidence -->  
 	<node pkg="bep_tpcw" type="generate_evidence_TW" name="generate_evidence_TW" output="screen"/>
+		<param name="Room_int" value="2"/>   
+		<param name="Trajectories_int" value="7"/>   
   
     <!-- run rviz   -->
-    <node pkg="rviz" type="rviz" respawn="false" name="rviz_world_model" output="screen" args="-d $(find bep_tpcw)/config/rviz_world_model_kinetic.rviz" />
+    <node pkg="rviz" type="rviz" respawn="false" name="rviz_world_model" output="screen" args="-d $(find bep_tpcw)/config/rviz_world_model_kinetic_Room2.rviz" />
 
     <include file="$(find wire_viz)/launch/start.launch" />  
 

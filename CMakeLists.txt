@@ -15,19 +15,24 @@ find_package(catkin REQUIRED COMPONENTS
 
 # Declare a catkin package                                                                                                                                
 catkin_package(
+  INCLUDE_DIRS
+    include
   CATKIN_DEPENDS
     roscpp
     wire_msgs
     problib
 )
 
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Build
 
-# ROS nodes
-add_executable(get_world_state_TW src/get_world_state_TW.cpp) 
-target_link_libraries(get_world_state_TW ${catkin_LIBRARIES})
+add_library(Room src/Room.cpp include/Room.h)
+target_link_libraries(Room ${catkin_LIBRARIES})
 
+add_library(Trajectories src/Trajectories.cpp include/Trajectories.h)
+target_link_libraries(Trajectories ${catkin_LIBRARIES})
+
+# ROS nodes
 add_executable(generate_evidence_TW src/generate_evidence_TW.cpp) 
-target_link_libraries(generate_evidence_TW ${catkin_LIBRARIES})
+target_link_libraries(generate_evidence_TW Room Trajectories ${catkin_LIBRARIES})
